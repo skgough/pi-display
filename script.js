@@ -37,7 +37,6 @@ function weather() {
         temp.innerText = `${parseInt(weather.main.temp)}°F`
         riseTime.innerText = `Sunrise: ${getTimeFromUnix(weather.sys.sunrise)}`
         setTime.innerText = `Sunset: ${getTimeFromUnix(weather.sys.sunset)}`
-        console.log(weather)
     }) 
 }
 
