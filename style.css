@@ -42,6 +42,35 @@ body {
     background: black;
     box-shadow: 0 0 0 2px white;
 }
+#weather {
+    position:fixed;
+    bottom: 1rem;
+    left: 2rem;
+    display: flex;
+    color: white;
+}
+#icon img {
+    height: 100px;
+    filter: drop-shadow(0 4px 8px black)
+}
+#icon div {
+    text-align: center;
+    font: bold 1rem/1 Piboto;
+    text-shadow: 0 .15em .25em black
+}
+#text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#temp {
+    font: bold 4rem/1 Piboto;
+    text-shadow: 0 .05em .15em black
+}
+#rise,#set {
+    font: bold 1.25rem/1 Piboto;
+    text-shadow: 0 .15em .25em black
+}
 #wifiBtn {
 	font: 700 2rem/1 Piboto;
     color: white;
@@ -56,6 +85,12 @@ body {
 }
 #wifiBtn:focus {
     outline: none;
+}
+#wifiBtn img {
+    height: 32px;
+    display: inline-block;
+    margin-right: .5ex;
+    vertical-align: bottom;
 }
 #wifiFrame {
     position: fixed;
