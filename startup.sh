@@ -1,4 +1,6 @@
 #!/bin/bash
+cd /home/pi/pi-display
+git pull origin master
 cd /home/pi/pi-display/art
 echo "fileList = [" > /home/pi/pi-display/fileList.js
 files=(*)

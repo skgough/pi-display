@@ -7,7 +7,6 @@ setInterval(changeBackground,600000)
 showTime()
 document.body.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('clicked')
     changeBackground()
 })
 wifiBtn.addEventListener('click', (e) => {
@@ -43,7 +42,6 @@ function changeBackground() {
     bg.addEventListener(load, () => {
         background.parentNode.replaceChild(bg,background)
         background = document.querySelector('#background')
-        console.log('loaded')
     })
 }
 
