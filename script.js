@@ -23,8 +23,8 @@ wifi.addEventListener('click', (e) => {
 })
 
 function changeBackground() {
-    const index = Math.floor(Math.random() * Math.floor(files.length))
-    const fileName = files[index]
+    const index = Math.floor(Math.random() * Math.floor(fileList.length))
+    const fileName = fileList[index]
     console.log(fileName)
     let bg,load
     if (fileName.includes('.mp4')) {
