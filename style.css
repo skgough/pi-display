@@ -1,97 +1,121 @@
 * {
-    cursor: none;
+    /*cursor: none;*/
     user-select: none;
 }
-:root {
-    --fg: black;
-    --bg: white;
-}
 body {
-    font-family: Piboto, sans-serif;
-    position: relative;
-    overflow: hidden;
-    height: 100vh;
-    color: var(--fg);
-    background-color: var(--bg);
-    padding: 0;
+    font-family: sans-serif;
+    color: white;
+    background-color: black;
     margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }
-#datetime {
+
+#background {
+	position: fixed;
+    top: -9999px;
+    bottom: -9999px;
+    left: -9999px;
+    right: -9999px;
+    min-height: 100%;
+    min-width: 100%;
+    margin: auto;
+    z-index: -1;
+}
+#foreground {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    gap: 0px 0px;
+    grid-template-areas:
+      "top top"
+      ". .";
     position: fixed;
-    top: 1rem;
-    left: 2rem;
-    display: inline-block;
-    text-shadow: 0 .5em .35em black
+    padding: 1rem;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    filter: drop-shadow(0 0 3px black)
 }
+  
+#datetime { 
+    margin-left: 1em;
+    grid-area: top;
+    align-self: start;
+    justify-self: start;
+}
+#weather {
+    display: flex;
+    align-self: end;
+    justify-self: start;
+}
+#wifiButton {
+    align-self: end;
+    justify-self: end;
+    margin: 1em
+}
+
+
 #time {
-    font: bold 8rem/1 Piboto;
-    -webkit-text-stroke: 3px white;
-    letter-spacing: -.05em;
+    font: 800 100px/1 sans-serif;
     float: right;
 }
 #date {
-    font: 900 3rem/1 Piboto;
-    -webkit-text-stroke: 2px white;
-    letter-spacing: -.015em;
+    font: 600 25px/1 sans-serif;
     float: right;
+    margin-right: .5ex;
 }
 #underline {
     display: inline-block;
-    height: .25em;
-    width: calc(100% - .25em);
-    background: black;
-    box-shadow: 0 0 0 2px white;
-}
-#weather {
-    position:fixed;
-    bottom: 1rem;
-    left: 2rem;
-    display: flex;
-    color: white;
-}
-#icon img {
-    height: 100px;
-    filter: drop-shadow(0 4px 8px black)
+    height: 5px;
+    width: calc(100% - .5ex);
+    background-color: white;
+    border-radius: 2.5px;
 }
 #icon div {
     text-align: center;
-    font: bold 1rem/1 Piboto;
-    text-shadow: 0 .15em .25em black
+    font: 700 18px/1 sans-serif;
+    vertical-align: top;
+}
+#icon img {
+    height: 150px;
 }
 #text {
+    height: 172px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 #temp {
-    font: bold 4rem/1 Piboto;
-    text-shadow: 0 .05em .15em black
+    font: 800 60px/120px sans-serif;
 }
-#rise,#set {
-    font: bold 1.25rem/1 Piboto;
-    text-shadow: 0 .15em .25em black
+#sunTimes {
+    font: 700 18px/1 sans-serif;
+    text-align: right;
 }
-#wifiBtn {
-	font: 700 2rem/1 Piboto;
+#rise {
+    margin-bottom: .25em;
+}
+#wifiButton button {
+    font: 700 36px/1 sans-serif;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
     color: white;
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-    background: black;
-    border: 3px solid white;
-    padding: .75rem 1rem;
-    border-radius: 15px;
-    box-shadow: 0 0 .35em .1em black
+    padding: 0
 }
-#wifiBtn:focus {
-    outline: none;
+#wifiButton button:focus {
+    outline: none
 }
-#wifiBtn img {
-    height: 32px;
-    display: inline-block;
-    margin-right: .5ex;
+#wifiButton img {
+    height: 36px;
     vertical-align: bottom;
+    display: inline-block;
+    margin-right: .15em
 }
+
 #wifiFrame {
     position: fixed;
     top: 0;
@@ -125,7 +149,8 @@ body {
 }
 #wifi > div {
     height: 30px;
-    font: 800 1.5rem Piboto;
+    font: 800 24px sans-serif;
+    color: black;
     line-height: 24px;
     vertical-align: top;
 }
@@ -150,15 +175,4 @@ body {
 .visible #wifi {
     opacity: 1;
     transform: none;
-}
-#background {
-	position: absolute;
-    top: -9999px;
-    bottom: -9999px;
-    left: -9999px;
-    right: -9999px;
-    min-height: 100%;
-    min-width: 100%;
-    margin: auto;
-	z-index: -1000
 }

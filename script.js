@@ -1,5 +1,5 @@
 const wifiFrame = document.querySelector('#wifiFrame')
-const wifiBtn = document.querySelector('#wifiBtn')
+const wifiBtn = document.querySelector('#wifiButton button')
 const wifi = document.querySelector('#wifi')
 const weatherIcon = document.querySelector('#icon > img')
 const shortDesc = document.querySelector('#icon > div')
@@ -8,6 +8,7 @@ const riseTime =  document.querySelector('#rise')
 const setTime =  document.querySelector('#set')
 let background = document.querySelector('#background')
 
+changeBackground()
 showTime()
 weather()
 

@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pi Display</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script defer src="fileList.js"></script>
+    <script defer src="script.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pi Display</title>
-  <link rel="stylesheet" type="text/css" href="style.css" />
-  <script defer src="fileList.js"></script>
-  <script defer src="script.js"></script>
-</head>
-
-<body>
-  <img id="background" src="./art/22710290_151633228778211_809415144168751104_n.jpg">
-  <div id="datetime">
-    <span id="time"></span>
-    <br>
-    <span id="date"></span>
-    <br>
-    <span id="underline"></span>
-  </div>
-  <div id="weather">
-    <div id="icon">
-      <img>
-      <div></div>
-    </div>
-    <div id="text">
-      <div id="temp"></div>
-      <div id="sunTimes">
-        <div id="rise"></div>
-        <div id="set"></div>
+  <body>
+    <img id="background" />
+    <div id="foreground">
+      <div id="datetime">
+        <span id="time"></span>
+        <br />
+        <span id="date"></span>
+        <br />
+        <span id="underline"></span>
+      </div>
+      <div id="weather">
+        <div id="icon">
+          <img />
+          <div></div>
+        </div>
+        <div id="text">
+          <div id="temp"></div>
+          <div id="sunTimes">
+            <div id="rise"></div>
+            <div id="set"></div>
+          </div>
+        </div>
+      </div>
+      <div id="wifiButton">
+        <button><img src="wifi.svg" />WiFi</button>
       </div>
     </div>
-  </div>
-  <button id="wifiBtn"><img src='wifi.svg'>WiFi</button>
-  <div id="wifiFrame">
-    <div id="wifi">
-      <div>Scan</div>
-      <img src="./wifi.png">
+    <div id="wifiFrame">
+      <div id="wifi">
+        <div>Scan</div>
+        <img src="./wifi.png" />
+      </div>
+      <button id="exitWifi">
+        <img src="close.svg" />
+      </button>
     </div>
-    <button id="exitWifi">
-      <img src="close.svg">
-    </button>
-  </div>
-</body>
-
+  </body>
 </html>
