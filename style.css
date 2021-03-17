@@ -5,6 +5,10 @@
 *:focus {
     outline: none;
 }
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 body {
     font-family: sans-serif;
     color: white;
@@ -114,6 +118,7 @@ body {
 }
 #wifiButton img {
     height: 36px;
+    vertical-align: bottom;
     display: inline-block;
     margin-right: .15em
 }
@@ -197,8 +202,8 @@ body {
     text-align: center;
 }
 .day .icon {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 }
 .day .description {
     font: 500 20px/2 sans-serif;
@@ -232,11 +237,11 @@ body {
 #forecast .details {
     pointer-events: none;
     position: absolute;
-    left: 5vw;
-    right: 5vw;
-    bottom: 10vh;
-    top: 45vh;
-    height: 45vh;
+    left: 2vw;
+    right: 2vw;
+    bottom: 5vh;
+    top: 209.49px;
+    height: 53vh;
     transition: background-color .3s;
     border-radius: 20px;
 }
@@ -247,7 +252,8 @@ body {
 #forecast .details .day {
     pointer-events: none;
     display: flex;
-    justify-content: center;
+    justify-content: start;
+    overflow-x: auto;
     position: absolute;
     top: 0;
     left: 0;
@@ -269,7 +275,7 @@ body {
 
 
 #forecast.details > .day {
-    transform: scale(.7) translateY(-208.5px)
+    transform: scale(.7) translateY(-180px)
 }
 #forecast > .day > .date,
 #forecast > .day > .icon,
@@ -294,7 +300,7 @@ body {
     text-align: center;
 }
 .chunk .temp {
-    font: 800 40px/1 sans-serif;
+    font: 800 30px/1 sans-serif;
     text-align: center;
 }
 .chunk .icon {
