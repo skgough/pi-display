@@ -1,6 +1,9 @@
 * {
-    cursor: none;
+    /*cursor: none;*/
     user-select: none;
+}
+*:focus {
+    outline: none;
 }
 body {
     font-family: sans-serif;
@@ -116,7 +119,7 @@ body {
     margin-right: .15em
 }
 
-#wifiFrame {
+#wifiFrame, #forecast {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -132,7 +135,8 @@ body {
     opacity: 0;
     transition: opacity .3s
 }
-#wifiFrame.visible {
+#wifiFrame.visible,
+#forecast.visible {
     pointer-events: all;
     opacity: 1;
 }
@@ -158,7 +162,8 @@ body {
     width: 150px;
     height: 150px;
 }
-#exitWifi {
+#exitWifi,
+#exitForecast {
     position: absolute;
     top: 15px;
     right: 15px;
@@ -169,10 +174,131 @@ body {
     border: 0;
     padding: 0;
 }
-#exitWifi:focus {
+#exitWifi:focus
+#exitForecast:focus {
     outline: none;
 }
 .visible #wifi {
     opacity: 1;
     transform: none;
+}
+
+#forecast {
+    display: flex;
+}
+.day {
+    padding: 0 1em;
+    transition: .2s transform;
+}
+.visible .day {
+    transform: none;
+}
+.day .date {
+    font: 800 25px/1.5 sans-serif;
+    text-align: center;
+}
+.day .icon {
+    width: 150px;
+    height: 150px;
+}
+.day .description {
+    font: 500 20px/2 sans-serif;
+    text-align: center;
+}
+.day .temprange {
+    display: flex;
+}
+.day .temprange .low,
+.day .temprange .high {
+    font: 500 18px/2 sans-serif;
+}
+.day .temprange .gradient {
+    flex-grow: 1;
+    margin: 12px 4px;
+    border-radius: 9px;
+    background-image: linear-gradient(90deg, rgb(4,110,173) 0%, rgb(255,0,116) 100%);
+}
+.day .expand {
+    appearance: none;
+    background: transparent;
+    color: white;
+    display: block;
+    width: 100%;
+    padding: 0;
+    font: 800 18px/3 sans-serif;
+    transition: background-color .3s;
+    border-radius: 10px 10px 0 0;
+    border: 0;
+}
+#forecast .details {
+    pointer-events: none;
+    position: absolute;
+    left: 5vw;
+    right: 5vw;
+    bottom: 10vh;
+    top: 45vh;
+    height: 45vh;
+    transition: background-color .3s;
+    border-radius: 20px;
+}
+#forecast.visible.details .details {
+    pointer-events: all;
+    background-color: rgba(0,0,0,0.3)
+}
+#forecast .details .day {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    border-radius: 20px;
+    transform: translateY(-20px);
+    transition: opacity .3s, transform .3s;
+}
+#forecast .details .day.visible {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0px);
+}
+.day .expand:focus {
+    outline: none;
+}
+
+
+#forecast.details > .day {
+    transform: scale(.7) translateY(-208.5px)
+}
+#forecast > .day > .date,
+#forecast > .day > .icon,
+#forecast > .day > .description,
+#forecast > .day > .temprange,
+#forecast > .day > .expand {
+    filter: drop-shadow(0 0 3px black);
+}
+#forecast.details > .day > .expand.active {
+    background: rgba(0,0,0,0.3);
+    filter: none;
+}
+.chunk {
+    filter: drop-shadow(0 0 3px black);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 2em 1.25em;
+}
+.chunk .time {
+    font: 800 20px/2 sans-serif;
+    text-align: center;
+}
+.chunk .temp {
+    font: 800 40px/1 sans-serif;
+    text-align: center;
+}
+.chunk .icon {
+    width: 75px;
+    height: 75px;
 }
