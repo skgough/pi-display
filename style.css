@@ -114,7 +114,6 @@ body {
 }
 #wifiButton img {
     height: 36px;
-    vertical-align: bottom;
     display: inline-block;
     margin-right: .15em
 }
