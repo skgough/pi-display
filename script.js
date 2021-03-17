@@ -59,16 +59,15 @@ function forecast() {
         for (const day in days) {
             const current = days[day]
             HTML += `
-<div class="day">
+<button class="day" data-day="${day}">
     <div class="date">${(parseInt(day) === today()) ? "Today" : getDoWFromUnix(current[0].dt)}</div>
-    <img class="icon" src="weather/${current[parseInt(current.length/2)].weather[0].icon}.png">
+    <img class="icon" data-src="weather/${current[parseInt(current.length/2)].weather[0].icon}.png">
     <div class="description">${current[parseInt(current.length/2)].weather[0].main}</div>
     <div class="temprange">
         <div class="low">${getLow(current)}°</div>
         <div class="gradient"></div>
         <div class="high">${getHigh(current)}°</div>
-    </div>
-    <button class="expand" data-day="${day}">Details</button>`
+    </div>`
             details += `
     <div class="day" data-day=${day}>`
             for(const time of days[day]) {
@@ -78,7 +77,7 @@ function forecast() {
         <div class="chunk">
             <div class="time">${time.time}</div>
             <div class="temp">${parseInt(time.main.temp)}°F</div>
-            <img class="icon" src="weather/${time.weather[0].icon}.png">
+            <img class="icon" data-src="weather/${time.weather[0].icon}.png">
             <div class="description">${time.weather[0].main}</div>
         </div>`
             }
@@ -95,23 +94,29 @@ function forecast() {
     <img src="close.svg" />
 </button>`
         forecastEl.innerHTML = HTML + details
-        const expanders = forecastEl.querySelectorAll('button.expand')
-        for (const each of expanders) {
+        const buttons = forecastEl.querySelectorAll('button.day')
+        for (const each of buttons) {
             each.addEventListener('click', () => {
-                console.log(each.dataset.day)
-                const tabs = document.querySelectorAll('.expand')
-                for (const tab of tabs) {
-                    tab.classList.remove('active')
+                if (each.classList.contains('active')) {
+                    each.classList.remove('active');
+                    forecastEl.classList.remove('details')
+                    const details = document.querySelectorAll('.details .day.visible')
+                    for (detail of details) {
+                        detail.classList.remove('visible')
+                    }
+                } else {
+                    const tabs = document.querySelectorAll('button.day')
+                    for (const tab of tabs) {
+                        tab.classList.remove('active')
+                    }
+                    const details = document.querySelectorAll('.details .day.visible')
+                    for (detail of details) {
+                        detail.classList.remove('visible')
+                    }
+                    each.classList.add('active')
+                    document.querySelector(`#forecast .details .day[data-day="${each.dataset.day}"]`).classList.add('visible')
+                    forecastEl.classList.add('details')
                 }
-                const details = document.querySelectorAll('.details .day.visible')
-                for (detail of details) {
-                    detail.classList.remove('visible')
-                }
-                
-                each.classList.add('active')
-                console.log(document.querySelector(`.details [data-day="${each.dataset.day}"]`))
-                document.querySelector(`.details .day[data-day="${each.dataset.day}"]`).classList.add('visible')
-                forecastEl.classList.add('details')
             })
         }
         forecastEl.querySelector('#exitForecast').addEventListener('click', () => {
@@ -120,7 +125,14 @@ function forecast() {
                 forecastEl.innerHTML = ''
             }, 300)
         })
-        forecastEl.classList.add('visible')
+        const images = forecastEl.querySelectorAll('img[data-src]')
+        let promises = []
+        for (const image of images) {
+            promises.push(loadImage(image))
+        }
+        Promise.all(promises).then(() => {
+            forecastEl.classList.add('visible')
+        })
     })
 }
 
@@ -220,4 +232,12 @@ function getLow(day) {
 }
 function details(day) {
     
+}
+function loadImage(image) {
+    return new  Promise(resolve => {
+        image.src = image.dataset.src
+        image.addEventListener('load', () => {
+            resolve();
+        })
+    })
 }

@@ -177,6 +177,7 @@ body {
     border-radius: 50%;
     border: 0;
     padding: 0;
+    transition: opacity .2s
 }
 #exitWifi:focus
 #exitForecast:focus {
@@ -190,9 +191,21 @@ body {
 #forecast {
     display: flex;
 }
+#forecast > .day {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: white;
+    transform: translateY(-20px);
+    padding: 1em;
+    transition: .2s transform, .2s background-color;
+    border-radius: 10px 10px 0 0;
+}
 .day {
     padding: 0 1em;
-    transition: .2s transform;
+}
+#forecast > .day.active {
+    background-color: rgba(0,0,0,.3);
 }
 .visible .day {
     transform: none;
@@ -249,6 +262,10 @@ body {
     pointer-events: all;
     background-color: rgba(0,0,0,0.3)
 }
+#forecast.details #exitForecast {
+    opacity: 0;
+    pointer-events: none;
+}
 #forecast .details .day {
     pointer-events: none;
     display: flex;
@@ -261,13 +278,13 @@ body {
     bottom: 0;
     opacity: 0;
     border-radius: 20px;
-    transform: translateY(-20px);
-    transition: opacity .3s, transform .3s;
+    filter: blur(10px);
+    transition: opacity .5s, filter .5s;
 }
 #forecast .details .day.visible {
     opacity: 1;
     pointer-events: all;
-    transform: translateY(0px);
+    filter: none;
 }
 .day .expand:focus {
     outline: none;
@@ -275,7 +292,7 @@ body {
 
 
 #forecast.details > .day {
-    transform: scale(.7) translateY(-180px)
+    transform: scale(.7) translateY(-166px)
 }
 #forecast > .day > .date,
 #forecast > .day > .icon,
