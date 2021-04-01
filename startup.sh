@@ -2,7 +2,7 @@
 cd /home/pi/pi-display
 git pull origin master
 cd /home/pi/pi-display/art
-echo "fileList = [" > /home/pi/pi-display/fileList.js
+echo "const fileList = [" > /home/pi/pi-display/fileList.js
 files=(*)
 n=0
 for current in "${files[@]}"; do
