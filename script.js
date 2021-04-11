@@ -137,7 +137,7 @@ function forecast() {
 }
 
 function changeBackground() {
-    const index = Math.floor(Math.random() * Math.floor(fileList.length))
+    const index = Math.floor(Math.random() * fileList.length)
     const fileName = fileList[index]
     let bg,load
     if (fileName.includes('.mp4')) {
@@ -228,13 +228,13 @@ function getHigh(day) {
     return parseInt(Math.max.apply(Math,day.map(function(time){return time.main.temp_max;})))
 }
 function getLow(day) {
-    return parseInt(Math.min.apply(Math,day.map(function(time){return time.main.temp_max;})))
+    return parseInt(Math.min.apply(Math,day.map(function(time){return time.main.temp_min;})))
 }
 function details(day) {
     
 }
 function loadImage(image) {
-    return new  Promise(resolve => {
+    return new Promise(resolve => {
         image.src = image.dataset.src
         image.addEventListener('load', () => {
             resolve();
