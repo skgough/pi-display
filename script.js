@@ -10,6 +10,11 @@ const riseTime =  document.querySelector('#rise')
 const setTime =  document.querySelector('#set')
 let background = document.querySelector('#background')
 
+if (!window.location.href.includes('file://')) {
+    let style = document.createElement('style')
+    style.textContent = '* {cursor: default}'
+    document.body.appendChild(style)
+}
 changeBackground()
 showTime()
 weather()
