@@ -1,13 +1,13 @@
-const wifiFrame = document.querySelector('#wifiFrame')
-const wifiBtn = document.querySelector('#wifiButton button')
+const qrCode = document.querySelector('#qr .code')
 const wifi = document.querySelector('#wifi')
+const qr = document.querySelector('#qr')
 const weatherEl = document.querySelector('#weather')
 const forecastEl = document.querySelector('#forecast')
-const weatherIcon = document.querySelector('#icon > img')
-const shortDesc = document.querySelector('#icon > div')
-const temp =  document.querySelector('#temp')
-const riseTime =  document.querySelector('#rise')
-const setTime =  document.querySelector('#set')
+const weatherIcon = document.querySelector('.icon > img')
+const shortDesc = document.querySelector('.icon > div')
+const temp =  document.querySelector('.temp')
+const riseTime =  document.querySelector('.rise')
+const setTime =  document.querySelector('.set')
 let background = document.querySelector('#background')
 
 if (!window.location.href.includes('file://')) {
@@ -26,13 +26,13 @@ document.body.addEventListener('click', (e) => {
     e.stopPropagation();
     changeBackground()
 })
-wifiBtn.addEventListener('click', (e) => {
+wifi.addEventListener('click', (e) => {
     e.stopPropagation();
-    wifiFrame.classList.add('visible');
+    document.body.classList.add('wifi')
 })
-wifiFrame.addEventListener('click', (e) => {
+qr.addEventListener('click', (e) => {
     e.stopPropagation();
-    wifiFrame.classList.remove('visible');
+    document.body.classList = ''
 })
 wifi.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -50,15 +50,14 @@ function weather() {
         weatherIcon.src = `weather/${weather.weather[0].icon}.png`
         shortDesc.innerText = weather.weather[0].main
         temp.innerText = `${parseInt(weather.main.temp)}°F`
-        riseTime.innerText = `Sunrise: ${getTimeFromUnix(weather.sys.sunrise)}`
-        setTime.innerText = `Sunset: ${getTimeFromUnix(weather.sys.sunset)}`
+        riseTime.innerHTML += getTimeFromUnix(weather.sys.sunrise)
+        setTime.innerHTML += getTimeFromUnix(weather.sys.sunset)
     }) 
 }
 function forecast() {
     getForecast().then((forecast) => {
         let HTML = ""
-        let details = `
-<div class="details">`
+        let details = `<div class="details">`
         forecast.list.forEach((time) => time.day_of_month = getDoMFromUnix(time.dt))
         const days = groupBy(forecast.list, 'day_of_month')
         for (const day in days) {
@@ -70,7 +69,6 @@ function forecast() {
     <div class="description">${current[parseInt(current.length/2)].weather[0].main}</div>
     <div class="temprange">
         <div class="low">${getLow(current)}°</div>
-        <div class="gradient"></div>
         <div class="high">${getHigh(current)}°</div>
     </div>`
             details += `
@@ -79,7 +77,7 @@ function forecast() {
                 time.date = getDateFromUnix(time.dt)
                 time.time = getTimeFromUnix(time.dt)
                 details += `   
-        <div class="chunk">
+        <div class="timestep">
             <div class="time">${time.time}</div>
             <div class="temp">${parseInt(time.main.temp)}°F</div>
             <img class="icon" data-src="weather/${time.weather[0].icon}.png">
@@ -95,8 +93,12 @@ function forecast() {
         details +=`
 </div>`
         HTML += `
-<button id="exitForecast">
-    <img src="close.svg" />
+<button class="exit">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path fill="white"
+        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+    </svg>
 </button>`
         forecastEl.innerHTML = HTML + details
         const buttons = forecastEl.querySelectorAll('button.day')
@@ -124,7 +126,8 @@ function forecast() {
                 }
             })
         }
-        forecastEl.querySelector('#exitForecast').addEventListener('click', () => {
+        forecastEl.querySelector('.exit').addEventListener('click', () => {
+            document.body.classList = ''
             forecastEl.classList = ''
             setTimeout(() => {
                 forecastEl.innerHTML = ''
@@ -136,7 +139,7 @@ function forecast() {
             promises.push(loadImage(image))
         }
         Promise.all(promises).then(() => {
-            forecastEl.classList.add('visible')
+            document.body.classList.add('forecast')
         })
     })
 }
@@ -230,13 +233,26 @@ function groupBy (xs, key) {
 };
 
 function getHigh(day) {
-    return parseInt(Math.max.apply(Math,day.map(function(time){return time.main.temp_max;})))
+    return parseInt(
+        Math.max.apply(
+            Math, day.map(
+                function(time) {
+                    return time.main.temp_max
+                }
+            )
+        )
+    )
 }
 function getLow(day) {
-    return parseInt(Math.min.apply(Math,day.map(function(time){return time.main.temp_min;})))
-}
-function details(day) {
-    
+    return parseInt(
+        Math.min.apply(
+            Math, day.map(
+                function (time) {
+                    return time.main.temp_min
+                }
+            )
+        )
+    )
 }
 function loadImage(image) {
     return new Promise(resolve => {

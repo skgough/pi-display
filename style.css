@@ -30,6 +30,12 @@ body {
     margin: auto;
     z-index: -1;
 }
+.wifi #background,
+.forecast #background {
+    visibility: hidden;
+    transition: visibility .2s step-end;
+}
+
 #foreground {
     display: grid;
     grid-template-columns: 50% 50%;
@@ -39,6 +45,7 @@ body {
       "top top"
       ". .";
     position: fixed;
+    z-index: 0;
     padding: 1rem;
     top: 0;
     bottom: 0;
@@ -58,12 +65,11 @@ body {
     align-self: end;
     justify-self: start;
 }
-#wifiButton {
+#wifi {
     align-self: end;
     justify-self: end;
-    margin: 1em
+    margin: 1rem
 }
-
 
 #time {
     font: 800 100px/1 sans-serif;
@@ -81,246 +87,231 @@ body {
     background-color: white;
     border-radius: 2.5px;
 }
-#icon div {
+
+#weather .icon img {
+    height: 100px;
+}
+#weather .icon div {
     text-align: center;
-    font: 700 18px/1 sans-serif;
-    vertical-align: top;
+    font-weight: bold;
+    font-size: 20px;
 }
-#icon img {
-    height: 150px;
-}
-#text {
-    height: 172px;
+#weather .info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-left: 1em;
 }
-#temp {
-    font: 800 60px/120px sans-serif;
+.temp {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
 }
-#sunTimes {
-    font: 700 18px/1 sans-serif;
+.rise, .set {
+    display: flex;
     text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    align-items: flex-end;
+    justify-content: space-between;
 }
-#rise {
-    margin-bottom: .25em;
-}
-#wifiButton button {
-    font: 700 36px/1 sans-serif;
-    appearance: none;
-    background-color: transparent;
-    border: 0;
-    color: white;
-    padding: 0
-}
-#wifiButton button:focus {
-    outline: none
-}
-#wifiButton img {
-    height: 36px;
-    vertical-align: bottom;
-    display: inline-block;
-    margin-right: .15em
+.rise img, .set img {
+    width: 50px;
+    margin-right: 1ex;
 }
 
-#wifiFrame, #forecast {
+#wifi {
+    appearance: none;
+    background: transparent;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border: 0;
+    font-size: 32px;
+    font-weight: bold;
+}
+#wifi img {
+    height: 40px;
+    margin-right: .5ex;
+}
+
+#qr, #forecast {
+    visibility: hidden;
+    opacity: 0;
     position: fixed;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
+    z-index: 1;
+    background-color: hsl(228, 5%, 22%);
+    background-image: url(noise.png);
+    background-position: center;
+    transition: opacity .2s;
+}
+#qr {
     align-items: center;
     justify-content: center;
     display: flex;
-    pointer-events: none;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    background: rgba(0,0,0,.3);
-    opacity: 0;
-    transition: opacity .3s
 }
-#wifiFrame.visible,
-#forecast.visible {
-    pointer-events: all;
-    opacity: 1;
-}
-#wifi {
+#qr .code {
     background: white;
-    transform: translateY(20px) scale(1.15);
-    transition: .3s transform, .3s scale;
-	width: 150px;
-	height: 180px;
-    margin-bottom: 40px;
-    border: 6px solid white;
-    border-radius: 6px;
-    box-shadow: 0 0 .35em black
-}
-#wifi > div {
-    height: 30px;
-    font: 800 24px sans-serif;
     color: black;
-    line-height: 24px;
-    vertical-align: top;
-}
-#wifi > img {
+    font-size: 25px;
+    font-weight: 900;
+    border-radius: 10px;
+    padding: .25em .5em;
     width: 150px;
-    height: 150px;
+    transform: translateY(10px);
+    transition: .2s transform;
 }
-#exitWifi,
-#exitForecast {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255,255,255,0.5);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 0;
+#qr button.exit,
+#forecast button.exit {
+    appearance: none;
     padding: 0;
-    transition: opacity .2s
+    border: 0;
+    background: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70px;
+    height: 70px;
 }
-#exitWifi:focus
-#exitForecast:focus {
-    outline: none;
+#qr button.exit svg {
+    position: absolute;
+    width: 60px;
+    bottom: 0;
+    left: 0;
 }
-.visible #wifi {
+#qr .code img {
+    width: 100%;
+}
+
+.wifi #qr {
+    visibility: visible;
     opacity: 1;
-    transform: none;
+}
+
+.wifi #qr .code {
+    transform: translateY(0);
 }
 
 #forecast {
-    display: flex;
+    text-align: center;
+    padding-top: 1em;
 }
-#forecast > .day {
-    appearance: none;
+#forecast button.exit svg {
+    width: 60px;
+}
+#forecast button.day {
+    width: 13vw;
+    max-width: 130px;
+    position: relative;
+    background-color: hsl(228, 5%, 30%);
+    background-image: url(noise.png);
+    background-size: 80%;
+    background-position: center;
+    border-radius: 1em;
     border: 0;
-    background: transparent;
+    margin: .25em;
+    padding: .5em;
+    font-size: 20px;
+    font-weight: bold;
     color: white;
-    transform: translateY(-20px);
-    padding: 1em;
-    transition: .2s transform, .2s background-color;
-    border-radius: 10px 10px 0 0;
+    transform: translateY(calc(50% + 10px));
+    transition: transform .2s;
 }
-.day {
-    padding: 0 1em;
+#forecast button.day .date {
+    font-size: 1.2em;
 }
-#forecast > .day.active {
-    background-color: rgba(0,0,0,.3);
-}
-.visible .day {
-    transform: none;
-}
-.day .date {
-    font: 800 25px/1.5 sans-serif;
-    text-align: center;
-}
-.day .icon {
-    width: 100px;
-    height: 100px;
-}
-.day .description {
-    font: 500 20px/2 sans-serif;
-    text-align: center;
-}
-.day .temprange {
-    display: flex;
-}
-.day .temprange .low,
-.day .temprange .high {
-    font: 500 18px/2 sans-serif;
-}
-.day .temprange .gradient {
-    flex-grow: 1;
-    margin: 12px 4px;
-    border-radius: 9px;
-    background-image: linear-gradient(90deg, rgb(4,110,173) 0%, rgb(255,0,116) 100%);
-}
-.day .expand {
-    appearance: none;
-    background: transparent;
-    color: white;
-    display: block;
+#forecast button.day .icon {
     width: 100%;
-    padding: 0;
-    font: 800 18px/3 sans-serif;
-    transition: background-color .3s;
-    border-radius: 10px 10px 0 0;
-    border: 0;
+}
+#forecast button.day .temprange {
+    display: flex;
+    font-size: 16px;
+    line-height: 30px;
+    border-radius: 15px;
+    background: linear-gradient(to left, hsl(0, 100%, 70%),hsl(240, 100%, 70%));
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 0 10px;
+}
+#forecast .low, #forecast .high {
+    filter: drop-shadow(0 0 3px black);
+}
+.forecast #forecast {
+    visibility: visible;
+    opacity: 1;
+}
+.forecast #forecast button.day {
+    transform: translateY(50%);
 }
 #forecast .details {
-    pointer-events: none;
-    position: absolute;
-    left: 2vw;
-    right: 2vw;
-    bottom: 5vh;
-    top: 209.49px;
-    height: 53vh;
-    transition: background-color .3s;
-    border-radius: 20px;
-}
-#forecast.visible.details .details {
-    pointer-events: all;
-    background-color: rgba(0,0,0,0.3)
-}
-#forecast.details #exitForecast {
+    visibility: hidden;
     opacity: 0;
-    pointer-events: none;
+    position: relative;
+    margin-top: 1em;
+    transform: translateY(10px);
+    transition: transform .2s, opacity .2s;
 }
 #forecast .details .day {
-    pointer-events: none;
-    display: flex;
-    justify-content: start;
-    overflow-x: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    visibility: hidden;
     opacity: 0;
-    border-radius: 20px;
-    filter: blur(10px);
-    transition: opacity .5s, filter .5s;
+    transition: .2s opacity;
 }
 #forecast .details .day.visible {
+    visibility: visible;
     opacity: 1;
-    pointer-events: all;
-    filter: none;
 }
-.day .expand:focus {
-    outline: none;
+#forecast .details .day {
+    position: absolute;
+    top: 0;
+    width: 90vw;
+    box-sizing: border-box;
+    margin: 0 5vw;
+    background-color: hsla(228, 5%, 15%, 0.7);
+    border-radius: 1em;
+    padding: 1em 0;
+    white-space: nowrap;
+    overflow-x:auto;
+}
+.day .timestep {
+    display: inline-block;
+    margin: 0 1em;
+}
+.day .timestep .time {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.day .timestep .temp {
+    font-size: 2rem;
+}
+.day .timestep .icon {
+    width: 50px;
+}
+.day::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: calc(100% - 9px);
+    margin-left: -15px;
+    border-width: 15px;
+    border-style: solid;
+    border-color: transparent transparent hsla(228, 5%, 15%, 0.7) transparent;
+    opacity: 0;
+    transition: .2s opacity;
+}
+.day.active::after {
+    opacity: 1;
+}
+#forecast.details button.day {
+    transform: translateY(0%);
 }
 
-
-#forecast.details > .day {
-    transform: scale(.7) translateY(-166px)
-}
-#forecast > .day > .date,
-#forecast > .day > .icon,
-#forecast > .day > .description,
-#forecast > .day > .temprange,
-#forecast > .day > .expand {
-    filter: drop-shadow(0 0 3px black);
-}
-#forecast.details > .day > .expand.active {
-    background: rgba(0,0,0,0.3);
-    filter: none;
-}
-.chunk {
-    filter: drop-shadow(0 0 3px black);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 2em 1.25em;
-}
-.chunk .time {
-    font: 800 20px/2 sans-serif;
-    text-align: center;
-}
-.chunk .temp {
-    font: 800 30px/1 sans-serif;
-    text-align: center;
-}
-.chunk .icon {
-    width: 75px;
-    height: 75px;
+#forecast.details .details {
+    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
 }

@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Pi Display</title>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <script defer src="fileList.js"></script>
-    <script defer src="script.js"></script>
-  </head>
 
-  <body>
-    <img id="background" />
-    <div id="foreground">
-      <div id="datetime">
-        <span id="time"></span>
-        <br />
-        <span id="date"></span>
-        <br />
-        <span id="underline"></span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pi Display</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <script src="fileList.js"></script>
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <img id="background" />
+  <div id="foreground">
+    <div id="datetime">
+      <span id="time"></span>
+      <br />
+      <span id="date"></span>
+      <br />
+      <span id="underline"></span>
+    </div>
+    <div id="weather">
+      <div class='icon'>
+        <img />
+        <div></div>
       </div>
-      <div id="weather">
-        <div id="icon">
-          <img />
-          <div></div>
+      <div class='info'>
+        <div class="temp"></div>
+        <div class="sun">
+          <div class="rise"><img src='sunrise.svg'></div>
+          <div class="set"><img src='sunset.svg'></div>
         </div>
-        <div id="text">
-          <div id="temp"></div>
-          <div id="sunTimes">
-            <div id="rise"></div>
-            <div id="set"></div>
-          </div>
-        </div>
-      </div>
-      <div id="wifiButton">
-        <button><img src="wifi.svg" />WiFi</button>
       </div>
     </div>
-    <div id="wifiFrame">
-      <div id="wifi">
-        <div>Scan</div>
-        <img src="./wifi.png" />
-      </div>
-      <button id="exitWifi">
-        <img src="close.svg" />
-      </button>
+    <button id="wifi"><img src="wifi.svg" />WiFi</button>
+  </div>
+  <div id="qr">
+    <div class='code'>
+      <div>Scan</div>
+      <img src="./wifi.png" />
     </div>
-    <div id="forecast">
-    </div>
-  </body>
+    <button class='exit'>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M0 0h24v24H0z" fill="none" />
+        <path fill="white"
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+      </svg>
+    </button>
+  </div>
+  <div id="forecast"></div>
+</body>
+
 </html>
