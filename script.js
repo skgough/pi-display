@@ -6,8 +6,8 @@ const forecastEl = document.querySelector('#forecast')
 const weatherIcon = document.querySelector('.icon > img')
 const shortDesc = document.querySelector('.icon > div')
 const temp =  document.querySelector('.temp')
-const riseTime =  document.querySelector('.rise')
-const setTime =  document.querySelector('.set')
+const riseTime =  document.querySelector('.rise > span')
+const setTime =  document.querySelector('.set > span')
 let background = document.querySelector('#background')
 
 if (!window.location.href.includes('file://')) {
