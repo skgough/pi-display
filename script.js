@@ -50,8 +50,8 @@ function weather() {
         weatherIcon.src = `weather/${weather.weather[0].icon}.png`
         shortDesc.innerText = weather.weather[0].main
         temp.innerText = `${parseInt(weather.main.temp)}°F`
-        riseTime.innerHTML += getTimeFromUnix(weather.sys.sunrise)
-        setTime.innerHTML += getTimeFromUnix(weather.sys.sunset)
+        riseTime.innerText = getTimeFromUnix(weather.sys.sunrise)
+        setTime.innerText = getTimeFromUnix(weather.sys.sunset)
     }) 
 }
 function forecast() {
