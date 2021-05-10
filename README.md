@@ -2,6 +2,9 @@
 # pi-display
 
 This is a webpage that runs on a Raspberry Pi in front of my front door. 
+
+[Live here](https://skgough.github.io/pi-display/)
+
 ![PXL_20210510_031324095](https://user-images.githubusercontent.com/44104194/117602232-27374180-b11e-11eb-99c2-f1d184b0edeb.jpg)
 
 It show the time, weather, and a QR code that configures the Wifi (if your phone supports it). 
