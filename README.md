@@ -7,7 +7,7 @@ This is a webpage that runs on a Raspberry Pi in front of my front door.
 
 ![PXL_20210510_031324095](https://user-images.githubusercontent.com/44104194/117602232-27374180-b11e-11eb-99c2-f1d184b0edeb.jpg)
 
-It show the time, weather, and a QR code that configures the Wifi (if your phone supports it). 
+It shows the time, weather, and a QR code that configures the Wifi (if your phone supports it). 
 
 ![Screenshot 2021-05-09 233741](https://user-images.githubusercontent.com/44104194/117602814-95303880-b11f-11eb-86ad-22d0c11dee40.png)
 
