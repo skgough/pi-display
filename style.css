@@ -11,8 +11,8 @@
 }
 body {
     font-family: sans-serif;
-    color: white;
-    background-color: black;
+    color: black;
+    background-color: white;
     margin: 0;
     width: 100vw;
     height: 100vh;
@@ -51,7 +51,7 @@ body {
     bottom: 0;
     right: 0;
     left: 0;
-    filter: drop-shadow(0 0 3px black)
+    filter: drop-shadow(0 0 2px black)
 }
   
 #datetime { 
@@ -84,7 +84,7 @@ body {
     display: inline-block;
     height: 5px;
     width: calc(100% - .5ex);
-    background-color: white;
+    background-color: black;
     border-radius: 2.5px;
 }
 
@@ -123,7 +123,6 @@ body {
 #wifi {
     appearance: none;
     background: transparent;
-    color: white;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -163,6 +162,7 @@ body {
     border-radius: 10px;
     padding: .25em .5em;
     width: 150px;
+    will-change: transform;
     transform: translateY(10px);
     transition: .2s transform;
 }
@@ -219,6 +219,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: white;
+    will-change: transform;
     transform: translateY(calc(50% + 10px));
     transition: transform .2s;
 }
@@ -247,6 +248,7 @@ body {
 }
 .forecast #forecast button.day {
     transform: translateY(50%);
+    will-change: transform;
 }
 #forecast .details {
     visibility: hidden;
@@ -254,6 +256,7 @@ body {
     position: relative;
     margin-top: 1em;
     transform: translateY(10px);
+    will-change: transform;
     transition: transform .2s, opacity .2s;
 }
 #forecast .details .day {
@@ -280,6 +283,7 @@ body {
 }
 .day .timestep {
     display: inline-block;
+    color: white;
     margin: 0 1em;
 }
 .day .timestep .time {
