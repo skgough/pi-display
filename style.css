@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "VT323";
+    src: url("./assets/Mecha_Condensed.ttf") format("truetype");
+  }
+
 * {
     cursor: none;
     user-select: none;
@@ -10,26 +15,31 @@
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
 body {
-    font-family: sans-serif;
-    color: black;
-    background-color: white;
+    font-family: VT323;
+    background-color: black;
+    background-image: url(./assets/protocol7.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    image-rendering: pixelated;
+    color: white;
     margin: 0;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 }
-
 #background {
-	position: fixed;
-    top: -9999px;
-    bottom: -9999px;
-    left: -9999px;
-    right: -9999px;
-    min-height: 100%;
-    min-width: 100%;
-    margin: auto;
-    z-index: -1;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-image: url(./assets/protocol7.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    filter: blur(12px) brightness(2) saturate(2);      /* glow range */
+    opacity:1;
+    mix-blend-mode: screen;
 }
+
 .wifi #background,
 .forecast #background {
     visibility: hidden;
@@ -71,20 +81,11 @@ body {
 }
 
 #time {
-    font: 800 80px/1 sans-serif;
-    float: right;
+    font: 60px/1 VT323;
 }
 #date {
-    font: 600 25px/1 sans-serif;
+    font: 25px/1 VT323;
     float: right;
-    margin-right: .5ex;
-}
-#underline {
-    display: inline-block;
-    height: 5px;
-    width: calc(100% - .5ex);
-    background-color: black;
-    border-radius: 2.5px;
 }
 
 #weather .icon img {
@@ -92,25 +93,19 @@ body {
 }
 #weather .icon div {
     text-align: center;
-    font-weight: bold;
     font-size: 20px;
 }
 #weather .info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: 1em;
 }
 .temp {
     font-size: 50px;
-    font-weight: bold;
-    text-align: center;
 }
 .rise, .set {
     display: flex;
-    text-align: right;
     font-size: 20px;
-    font-weight: bold;
     align-items: flex-end;
     justify-content: space-between;
 }
@@ -121,20 +116,37 @@ body {
 
 #wifi {
     appearance: none;
+    color: white;
+    font-family: VT323;
     background: transparent;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     border: 0;
     font-size: 32px;
-    font-weight: bold;
 }
-#wifi img {
-    height: 40px;
+#wifi > span {
+    height: 32px;
+    width: 32px;
+    position: relative;
+    background-image: url(./assets/wifi-logo.png);
+    background-size: 100%;
     margin-right: .5ex;
 }
+#wifi > span::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    background-image: url(./assets/wifi-logo.png);
+    background-size: 100%;
+    filter: blur(3px) brightness(1.5);        /* glow range */
+    opacity:1;
+    mix-blend-mode: lighten;
+}
 
-#qr, #forecast {
+#qr, #forecast, #calendar {
     visibility: hidden;
     opacity: 0;
     position: fixed;
@@ -143,11 +155,33 @@ body {
     bottom: 0;
     left: 0;
     z-index: 1;
-    background-color: hsl(228, 5%, 22%);
-    background-image: url(assets/noise.png);
-    background-position: center;
-    transition: opacity .2s;
+    background-color: black;
+    transition: opacity steps(3, end) .2s;
 }
+#calendar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#calendar .table {
+    text-align: center;
+    font-size: 25px;
+    transform: translateY(10px);
+    transition: .2s steps(3, end) transform
+}
+.calendar #calendar .table {
+    transform: translateY(0px);
+}
+#calendar table .highlight {
+    color: #e397ae;
+}
+#calendar tbody .highlight {
+    background: rgba(255,255,255,0.2)
+}
+#calendar thead td {
+    padding: .25em
+}
+
 #qr {
     align-items: center;
     justify-content: center;
@@ -156,35 +190,51 @@ body {
 #qr .code {
     background: white;
     color: black;
-    font-size: 25px;
-    font-weight: 900;
-    border-radius: 10px;
-    padding: .25em .5em;
+    font-size: 0;
+    padding: 5px;
     width: 150px;
+    box-shadow: 0 0 30px 0 #e397ae;
     will-change: transform;
     transform: translateY(10px);
-    transition: .2s transform;
+    transition: .2s steps(3, end) transform, .2s box-shadow ;
 }
-#qr button.exit,
-#forecast button.exit {
+button.exit {
     appearance: none;
+    background-color: transparent;
+    background-image: url(./assets/close.png);
+    background-size: 60%;
+    background-position: bottom left;
+    background-repeat: no-repeat;
     padding: 0;
     border: 0;
-    background: transparent;
     position: absolute;
     top: 0;
     right: 0;
     width: 70px;
     height: 70px;
 }
-#qr button.exit svg {
+button.exit::after {
+    content: '';
     position: absolute;
-    width: 60px;
-    bottom: 0;
+    width: 100%;
+    height: 100%;
     left: 0;
+    top: 0;
+    background-image: url(./assets/close.png);
+    background-size: 60%;
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    filter: blur(3px) brightness(1.5);        /* glow range */
+    opacity:1;
+    mix-blend-mode: lighten;
 }
+
 #qr .code img {
     width: 100%;
+}
+.calendar #calendar {
+    visibility: visible;
+    opacity: 1;
 }
 
 .wifi #qr {
@@ -200,15 +250,10 @@ body {
     text-align: center;
     padding-top: 1em;
 }
-#forecast button.exit svg {
-    width: 60px;
-}
 #forecast button.day {
     width: 13vw;
     max-width: 130px;
     position: relative;
-    background-color: hsl(228, 5%, 30%);
-    background-image: url(assets/noise.png);
     background-size: 80%;
     background-position: center;
     border-radius: 1em;
@@ -216,7 +261,6 @@ body {
     margin: .25em;
     padding: .5em;
     font-size: 20px;
-    font-weight: bold;
     color: white;
     will-change: transform;
     transform: translateY(calc(50% + 10px));
@@ -284,7 +328,6 @@ body {
 }
 .day .timestep .time {
     font-size: 1.2rem;
-    font-weight: bold;
 }
 .day .timestep .temp {
     font-size: 2rem;

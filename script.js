@@ -1,54 +1,35 @@
+const dateTime = document.querySelector('#datetime')
+const calendar = document.querySelector('#calendar')
 const qrCode = document.querySelector('#qr .code')
 const wifi = document.querySelector('#wifi')
 const qr = document.querySelector('#qr')
 const weatherEl = document.querySelector('#weather')
 const forecastEl = document.querySelector('#forecast')
-const weatherIcon = document.querySelector('.icon > img')
-const shortDesc = document.querySelector('.icon > div')
 const temp =  document.querySelector('.temp')
 const riseTime =  document.querySelector('.rise > span')
 const setTime =  document.querySelector('.set > span')
-let background = document.querySelector('#background')
 
-if (!window.location.href.includes('file://')) {
-    let style = document.createElement('style')
-    style.textContent = '* {cursor: default}'
-    document.body.appendChild(style)
-}
-changeBackground()
 showTime()
 weather()
 
-setInterval(changeBackground,600000)
 setInterval(weather,3600000)
 
-document.body.addEventListener('click', (e) => {
-    e.stopPropagation();
-    changeBackground()
+dateTime.addEventListener('click', showCalendar)
+calendar.addEventListener('click', () => {
+    document.body.classList = ''
+    calendar.querySelector('.table').innerHTML = ''
 })
-wifi.addEventListener('click', (e) => {
-    e.stopPropagation();
+
+wifi.addEventListener('click', () => {
     document.body.classList.add('wifi')
 })
-qr.addEventListener('click', (e) => {
-    e.stopPropagation();
+qr.addEventListener('click', () => {
     document.body.classList = ''
 })
-wifi.addEventListener('click', (e) => {
-    e.stopPropagation();
-})
-weatherEl.addEventListener('click', (e) => {
-    e.stopPropagation();
-    forecast()
-})
-forecastEl.addEventListener('click', (e) => {
-    e.stopPropagation();
-})
+// weatherEl.addEventListener('click', forecast)
 
 function weather() {
     getWeather().then((weather) => {
-        weatherIcon.src = `weather/${weather.weather[0].icon}.png`
-        shortDesc.innerText = weather.weather[0].main
         temp.innerText = `${parseInt(weather.main.temp)}°F`
         riseTime.innerText = getTimeFromUnix(weather.sys.sunrise)
         setTime.innerText = getTimeFromUnix(weather.sys.sunset)
@@ -65,7 +46,6 @@ function forecast() {
             HTML += `
 <button class="day" data-day="${day}">
     <div class="date">${(parseInt(day) === today()) ? "Today" : getDoWFromUnix(current[0].dt)}</div>
-    <img class="icon" data-src="weather/${current[parseInt(current.length/2)].weather[0].icon}.png">
     <div class="description">${current[parseInt(current.length/2)].weather[0].main}</div>
     <div class="temprange">
         <div class="low">${getLow(current)}°</div>
@@ -80,7 +60,6 @@ function forecast() {
         <div class="timestep">
             <div class="time">${time.time}</div>
             <div class="temp">${parseInt(time.main.temp)}°F</div>
-            <img class="icon" data-src="weather/${time.weather[0].icon}.png">
             <div class="description">${time.weather[0].main}</div>
         </div>`
             }
@@ -92,14 +71,7 @@ function forecast() {
         }
         details +=`
 </div>`
-        HTML += `
-<button class="exit">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path fill="white"
-        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-    </svg>
-</button>`
+        HTML += `<button class="exit"></button>`
         forecastEl.innerHTML = HTML + details
         const buttons = forecastEl.querySelectorAll('button.day')
         for (const each of buttons) {
@@ -128,7 +100,6 @@ function forecast() {
         }
         forecastEl.querySelector('.exit').addEventListener('click', () => {
             document.body.classList = ''
-            forecastEl.classList = ''
             setTimeout(() => {
                 forecastEl.innerHTML = ''
             }, 300)
@@ -141,29 +112,6 @@ function forecast() {
         Promise.all(promises).then(() => {
             document.body.classList.add('forecast')
         })
-    })
-}
-
-function changeBackground() {
-    const index = Math.floor(Math.random() * fileList.length)
-    const fileName = fileList[index]
-    let bg,load
-    if (fileName.includes('.mp4')) {
-        bg = document.createElement('video')
-        bg.loop = true
-        bg.controls = false
-        bg.muted = true
-        bg.autoplay = true
-        load = 'loadeddata'
-    } else {
-        bg = document.createElement('img')
-        load = 'load'
-    }
-    bg.id = 'background'
-    bg.src = 'art/' + fileName
-    bg.addEventListener(load, () => {
-        background.parentNode.replaceChild(bg,background)
-        background = document.querySelector('#background')
     })
 }
 
@@ -261,4 +209,102 @@ function loadImage(image) {
             resolve();
         })
     })
+}
+function genCal() {
+    const day_of_week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const month_of_year = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+    const Calendar = new Date()
+
+    const year = Calendar.getFullYear()
+    const month = Calendar.getMonth()
+    const today = Calendar.getDate()
+    const weekday = Calendar.getDay()
+
+    const DAYS_OF_WEEK = 7
+    const DAYS_OF_MONTH = 31
+
+    Calendar.setDate(1);    // Start the calendar day at '1'
+    Calendar.setMonth(month);    // Start the calendar month at now
+
+
+    /* VARIABLES FOR FORMATTING
+    NOTE: You can format the 'BORDER', 'BGCOLOR', 'CELLPADDING', 'BORDERCOLOR'
+          tags to customize your caledanr's look. */
+
+    const TR_start = '<tr>';
+    const TR_end = '</tr>';
+    const highlight_start = '<td class=highlight>';
+    const highlight_end = '</td>';
+    const TD_start = '<td>';
+    const TD_end = '</td>';
+
+    let cal = "<table><thead><tr>" + 
+                `<th colspan=${DAYS_OF_WEEK}>${month_of_year[month]} ${year}</th>` + 
+                "</tr><tr>"
+
+    //   DO NOT EDIT BELOW THIS POINT  //
+
+    // LOOPS FOR EACH DAY OF WEEK
+    for (index = 0; index < DAYS_OF_WEEK; index++) {
+
+        // BOLD TODAY'S DAY OF WEEK
+        if (weekday == index)
+            cal += "<td class=highlight>" + day_of_week[index] + TD_end;
+
+        // PRINTS DAY
+        else
+            cal += TD_start + day_of_week[index] + TD_end;
+    }
+
+    cal += TR_end;
+    cal += '</thead><tbody>'
+    cal += TR_start;
+
+    // FILL IN BLANK GAPS UNTIL TODAY'S DAY
+    for (index = 0; index < Calendar.getDay(); index++)
+        cal += TD_start + '  ' + TD_end;
+
+    // LOOPS FOR EACH DAY IN CALENDAR
+    for (index = 0; index < DAYS_OF_MONTH; index++) {
+        if (Calendar.getDate() > index) {
+            // RETURNS THE NEXT DAY TO PRINT
+            week_day = Calendar.getDay();
+
+            // START NEW ROW FOR FIRST DAY OF WEEK
+            if (week_day == 0)
+                cal += TR_start;
+
+            if (week_day != DAYS_OF_WEEK) {
+
+                // SET VARIABLE INSIDE LOOP FOR INCREMENTING PURPOSES
+                let day = Calendar.getDate();
+
+                // HIGHLIGHT TODAY'S DATE
+                if (today == Calendar.getDate())
+                    cal += highlight_start + day + highlight_end + TD_end;
+
+                // PRINTS DAY
+                else
+                    cal += TD_start + day + TD_end;
+            }
+
+            // END ROW FOR LAST DAY OF WEEK
+            if (week_day == DAYS_OF_WEEK)
+                cal += TR_end;
+        }
+
+        // INCREMENTS UNTIL END OF THE MONTH
+        Calendar.setDate(Calendar.getDate() + 1);
+
+    }// end for loop
+
+    cal += '</td></tr><tbody></table>';
+
+    return cal
+}
+
+function showCalendar() {
+    document.body.classList.add('calendar')
+    calendar.querySelector('.table').innerHTML = genCal();
 }
