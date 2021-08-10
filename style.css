@@ -35,7 +35,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 30%;
-    filter: blur(12px) brightness(2) saturate(2);      /* glow range */
+    filter: blur(15px) brightness(1.75) saturate(1.5);      /* glow range */
     opacity:1;
     mix-blend-mode: screen;
 }
@@ -131,6 +131,7 @@ body {
     position: relative;
     background-image: url(./assets/wifi-logo.png);
     background-size: 100%;
+    background-repeat: no-repeat;
     margin-right: .5ex;
 }
 #wifi > span::after {
@@ -141,6 +142,7 @@ body {
     left: 0;
     background-image: url(./assets/wifi-logo.png);
     background-size: 100%;
+    background-repeat: no-repeat;
     filter: blur(3px) brightness(1.5);        /* glow range */
     opacity:1;
     mix-blend-mode: lighten;
